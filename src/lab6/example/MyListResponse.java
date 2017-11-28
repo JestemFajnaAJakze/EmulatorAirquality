@@ -1,18 +1,17 @@
 package lab6.example;
 
-import lab6.rest.pojo.EntryPOJO;
-import lab6.rest.pojo.SubstancePOJO;
+import lab6.rest.pojo.LiterarySubstancePOJO;
 
 import java.util.List;
 
 public class MyListResponse {
-    List<SubstancePOJO> substances;
+    List<LiterarySubstancePOJO> substances;
 
-    public List<SubstancePOJO> getSubstances() {
+    public List<LiterarySubstancePOJO> getSubstances() {
         return substances;
     }
 
-    public void setSubstances(List<SubstancePOJO> substances) {
+    public void setSubstances(List<LiterarySubstancePOJO> substances) {
         this.substances = substances;
     }
 }

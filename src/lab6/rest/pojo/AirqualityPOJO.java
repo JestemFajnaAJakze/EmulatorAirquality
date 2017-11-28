@@ -5,18 +5,18 @@ import java.util.List;
 
 public class AirqualityPOJO {
 
-    private List<Substance> substances;
+    private List<SubstancePOJO> substancePOJOS;
 
     public AirqualityPOJO() {
-        substances = new ArrayList<>();
+        substancePOJOS = new ArrayList<>();
     }
 
-    public List<Substance> getSubstances() {
-        return substances;
+    public List<SubstancePOJO> getSubstancePOJOS() {
+        return substancePOJOS;
     }
 
-    public void setSubstances(List<Substance> substances) {
-        this.substances = substances;
+    public void setSubstancePOJOS(List<SubstancePOJO> substancePOJOS) {
+        this.substancePOJOS = substancePOJOS;
     }
 
 

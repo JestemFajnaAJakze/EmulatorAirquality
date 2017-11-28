@@ -1,21 +1,25 @@
 package lab6.rest.pojo;
 
 public class SubstancePOJO {
-
-
-    private String substanceId;
+    private String type;
     private String substanceName;
-    private String unit;
-    private double treshold;
+    private double value;
 
-    public SubstancePOJO(){}
-
-    public String getSubstanceId() {
-        return substanceId;
+    public SubstancePOJO() {
     }
 
-    public void setSubstanceId(String substanceId) {
-        this.substanceId = substanceId;
+    public SubstancePOJO(String type, String substanceName, double value) {
+        this.type = type;
+        this.substanceName = substanceName;
+        this.value = value;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getSubstanceName() {
@@ -26,22 +30,11 @@ public class SubstancePOJO {
         this.substanceName = substanceName;
     }
 
-    public String getUnit() {
-        return unit;
+    public double getValue() {
+        return value;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setValue(double value) {
+        this.value = value;
     }
-
-    public double getTreshold() {
-        return treshold;
-    }
-
-    public void setTreshold(double treshold) {
-        this.treshold = treshold;
-    }
-
-
-
 }

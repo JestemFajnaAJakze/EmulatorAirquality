@@ -1,16 +1,10 @@
 package lab6.example.service;
 
-import lab6.example.PATCH;
-import lab6.rest.pojo.EntryPOJO;
-import lab6.rest.pojo.SubstancePOJO;
+import lab6.rest.pojo.*;
 
 import javax.inject.Singleton;
 import javax.ws.rs.*;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
+import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -21,39 +15,49 @@ import java.util.TimerTask;
 @Singleton
 @Path("")
 public class EmulatorREST {
-    List<SubstancePOJO> substances = new ArrayList<SubstancePOJO>();
+    List<LiterarySubstancePOJO> literarySubstances = new ArrayList<LiterarySubstancePOJO>();
+    List<StationPOJO> stations = new ArrayList<>();
 
     boolean isEmulatorRunning = false;
 
 
 
     private static final String REST_URI = "http://localhost:8080/lab6_v2Web";
+    private static final String REST_URI_STATIONS = "http://localhost:8282/lab6_v2Web";
     private Client restClient;
     private WebTarget resourceTarget;
 
 
 
     public EmulatorREST() {
+
     }
 
     @POST
     @Path("/substances/") //update słownika substancji dla emulatora
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateSubstances(List<SubstancePOJO> substances) {
+    public Response updateSubstances(List<LiterarySubstancePOJO> literarySubstances) {
 //        setupSubstances();
-        this.substances = substances;
-        System.out.println(substances);
-        for (SubstancePOJO substancePOJO : substances) {
-            System.out.println(substancePOJO.getSubstanceName());
+        this.literarySubstances = literarySubstances;
+        System.out.println(literarySubstances);
+        for (LiterarySubstancePOJO literarySubstancePOJO : literarySubstances) {
+            System.out.println(literarySubstancePOJO.getSubstanceName());
         }
 
-
-
         if(!isEmulatorRunning){
+            addMockStations();
             startEmulator();
             isEmulatorRunning = true;
         }
         return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
+    private void addMockStations() {
+        StationPOJO stationPOJO1 = new StationPOJO("1", new Address("city1", "street1"), new ArrayList<>());
+        stations.add(stationPOJO1);
+
+        StationPOJO stationPOJO2 = new StationPOJO("2", new Address("city2", "street2"), new ArrayList<>());
+        stations.add(stationPOJO2);
     }
 
 
@@ -80,22 +84,27 @@ public class EmulatorREST {
     }
 
 
-    private void sendAirQualities() {
-        System.out.println("sendAirQualities");
-
-
-//                restClient = ClientBuilder.newClient();
-//        resourceTarget = restClient.target(REST_URI);
-//        WebTarget methodTarget = resourceTarget.path("/airquality/1");
-//        Invocation.Builder invocationBuilder = methodTarget.request(MediaType.APPLICATION_JSON);
-//        AirqualityPOJO airqualityPOJO = new AirqualityPOJO();
-//        Substance substance = new Substance();
-//        substance.setSubstanceName("substanceName");
-//        airqualityPOJO.getSubstances().add(substance);
-//      //  invocationBuilder.post(new GenericType<AirqualityREST>(){});
-//      invocationBuilder.post(Entity.entity(airqualityPOJO, MediaType.APPLICATION_JSON));
-//        //invocationBuilder.get(new GenericType<List<EntryPOJO>>(){});
-
+    private void setupStationsSubstances() {
+        for (StationPOJO station : stations) {
+            List<SubstancePOJO> substances = new ArrayList<>();
+            for (LiterarySubstancePOJO literarySubstance : literarySubstances) {
+                double randomNum = 10 + (int)(Math.random() * 20);
+                substances.add(new SubstancePOJO(literarySubstance.getSubstanceId(),literarySubstance.getSubstanceName(),randomNum));
+            }
+            station.setSubstances(substances);
+        }
     }
 
+    private void sendAirQualities() {
+        System.out.println("sendAirQualities");
+        for (StationPOJO station : stations) {
+            setupStationsSubstances();
+
+            restClient = ClientBuilder.newClient();
+            resourceTarget = restClient.target(REST_URI_STATIONS);
+            WebTarget methodTarget = resourceTarget.path("/airquality/" + station.getStationId());
+            Invocation.Builder invocationBuilder = methodTarget.request(MediaType.APPLICATION_JSON);
+            invocationBuilder.post(Entity.entity(station, MediaType.APPLICATION_JSON));
+        }
+    }
 }
