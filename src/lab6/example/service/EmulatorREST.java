@@ -58,6 +58,13 @@ public class EmulatorREST {
 
         StationPOJO stationPOJO2 = new StationPOJO("2", new Address("city2", "street2"), new ArrayList<>());
         stations.add(stationPOJO2);
+
+        StationPOJO stationPOJO3 = new StationPOJO("3", new Address("city2", "street2"), new ArrayList<>());
+        stations.add(stationPOJO3);
+
+        StationPOJO stationPOJO4 = new StationPOJO("4", new Address("city2", "street2"), new ArrayList<>());
+        stations.add(stationPOJO4);
+
     }
 
 
