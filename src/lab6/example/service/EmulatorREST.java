@@ -86,7 +86,7 @@ public class EmulatorREST {
         };
         Timer timer = new Timer();
         long delay = 0;
-        long intevalPeriod = 1 * 1000;
+        long intevalPeriod = 1 * 60000; //60 sec
         timer.scheduleAtFixedRate(task, delay, intevalPeriod);
     }
 
