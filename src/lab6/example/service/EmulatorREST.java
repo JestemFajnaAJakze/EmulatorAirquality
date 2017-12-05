@@ -53,16 +53,16 @@ public class EmulatorREST {
     }
 
     private void addMockStations() {
-        StationPOJO stationPOJO1 = new StationPOJO("1", new Address("city1", "street1"), new ArrayList<>());
+        StationPOJO stationPOJO1 = new StationPOJO("1", new Address("Warszawa", "Kaliskiego"), new ArrayList<>());
         stations.add(stationPOJO1);
 
-        StationPOJO stationPOJO2 = new StationPOJO("2", new Address("city2", "street2"), new ArrayList<>());
+        StationPOJO stationPOJO2 = new StationPOJO("2", new Address("Krakow", "Grodzka"), new ArrayList<>());
         stations.add(stationPOJO2);
 
-        StationPOJO stationPOJO3 = new StationPOJO("3", new Address("city2", "street2"), new ArrayList<>());
+        StationPOJO stationPOJO3 = new StationPOJO("3", new Address("Gdansk", "Kochanowskiego"), new ArrayList<>());
         stations.add(stationPOJO3);
 
-        StationPOJO stationPOJO4 = new StationPOJO("4", new Address("city2", "street2"), new ArrayList<>());
+        StationPOJO stationPOJO4 = new StationPOJO("4", new Address("Szczecin", "Krakowska"), new ArrayList<>());
         stations.add(stationPOJO4);
 
     }
